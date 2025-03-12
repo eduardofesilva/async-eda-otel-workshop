@@ -1,0 +1,63 @@
+asyncapi: 3.0.0
+info:
+  title: Pulsar OTEL Example
+  version: 0.1.0
+  description: AsyncAPI specification for the Pulsar OTEL example project.
+servers:
+  test:
+    host: 'localhost:6650'
+    protocol: pulsar
+    bindings:
+      pulsar:
+        tenant: public
+        bindingVersion: 0.1.0
+channels:
+  my-topic:
+    address: my-topic
+    messages:
+      publishMessage.message:
+        contentType: application/json
+        payload:
+          type: object
+          properties:
+            message_id:
+              type: string
+              description: Unique identifier for the message.
+            content:
+              type: string
+              description: The content of the message.
+      consumeMessage.message:
+        contentType: application/json
+        payload:
+          type: object
+          properties:
+            message_id:
+              type: string
+              description: Unique identifier for the message.
+            content:
+              type: string
+              description: The content of the message.
+    description: Topic for publishing and consuming messages.
+    bindings:
+      pulsar:
+        namespace: default
+        persistence: persistent
+        retention:
+          time: 7
+          size: 1000
+        ttl: 360
+operations:
+  publishMessage:
+    action: receive
+    channel:
+      $ref: '#/channels/my-topic'
+    summary: Publish a message to the topic.
+    messages:
+      - $ref: '#/channels/my-topic/messages/publishMessage.message'
+  consumeMessage:
+    action: send
+    channel:
+      $ref: '#/channels/my-topic'
+    summary: Consume a message from the topic.
+    messages:
+      - $ref: '#/channels/my-topic/messages/consumeMessage.message'
