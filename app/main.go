@@ -490,11 +490,19 @@ func getHostname() string {
 // Helper function to parse OTLP headers from string in format "key1=value1,key2=value2"
 func parseHeaders(headerString string) map[string]string {
 	headers := make(map[string]string)
-	// Simple parsing - in production you might want more robust parsing
 	for _, pair := range strings.Split(headerString, ",") {
+		pair = strings.TrimSpace(pair)
+		if pair == "" {
+			continue
+		}
+
 		parts := strings.SplitN(pair, "=", 2)
 		if len(parts) == 2 {
-			headers[parts[0]] = parts[1]
+			key := strings.TrimSpace(parts[0])
+			value := strings.TrimSpace(parts[1])
+			if key != "" {
+				headers[key] = value
+			}
 		}
 	}
 	return headers
