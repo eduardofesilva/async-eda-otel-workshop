@@ -220,3 +220,15 @@ variable "external_dns_chart_version" {
   type        = string
   default     = "1.13.1"
 }
+
+variable "istio_version" {
+  description = "Istio Helm chart version"
+  type        = string
+  default     = "1.20.0"
+}
+
+variable "istio_namespace" {
+  description = "Namespace for Istio components"
+  type        = string
+  default     = "istio-system"
+}

@@ -26,7 +26,16 @@ terraform plan
 terraform apply -auto-approve
 ```
 
-### 3. Install OpenTelemetry Collector
+### 3. Install Istio Ingress Gateway
+
+Istio is installed using Terraform alongside the Pulsar deployment. Re-apply the configuration to install Istio and create an ingress route to the Pulsar proxy service.
+
+```bash
+cd ./iac-pulsar
+terraform apply -auto-approve
+```
+
+### 4. Install OpenTelemetry Collector
 
 Navigate to the `k8s-otel` directory and install the OpenTelemetry Collector using Helm.
 
@@ -40,7 +49,7 @@ helm install my-opentelemetry-operator open-telemetry/opentelemetry-operator \
 kubectl apply -f ./otel-crd.yml
 ```
 
-### 4. Run the Pulsar OpenTelemetry App
+### 5. Run the Pulsar OpenTelemetry App
 
 Navigate to the `app` directory, build, and run the Go application.
 

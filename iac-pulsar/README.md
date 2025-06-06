@@ -11,6 +11,7 @@ This deployment creates:
 - EBS CSI Driver for persistent storage
 - Certificate Manager for TLS certificates
 - External DNS for automatic DNS record management
+- Istio Gateway for ingress traffic to Pulsar
 - Proper IAM roles and policies for security
 
 ## Prerequisites
@@ -66,14 +67,20 @@ The deployment requires several variables to be defined. The key variables inclu
    terraform apply -var-file=terraform.tfvars
    ```
 
-4. **Verify the deployment**
+4. **Install Istio and Gateway**
+   ```bash
+   terraform apply -var-file=terraform.tfvars
+   ```
+
+   This second apply installs the Istio components and configures the Pulsar ingress.
+5. **Verify the deployment**
    ```bash
    kubectl get pods -n kaap-system
    kubectl get pulsarcluster -n kaap-system
    kubectl get svc -n kaap-system
    ```
 
-5. **Access Pulsar Admin Console**
+6. **Access Pulsar Admin Console**
    
    Once the deployment completes, you can access the Pulsar Admin Console at:
    ```
