@@ -4,7 +4,7 @@ resource "kubernetes_namespace" "kaap" {
     name = "kaap-system"
     labels = {
       "app.kubernetes.io/managed-by" = "terraform"
-      "istio-injection"              = "enabled"
+      "sidecar.istio.io/inject"      = "true"
     }
   }
 }
